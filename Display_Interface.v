@@ -22,31 +22,31 @@
 
 module Display_Interface(clk,W,WADD,DIN,E,segOut,DP);
 input clk;
-input wire W;
-input wire [2:0]WADD;
-input wire [5:0]DIN;
+input W;
+input [2:0]WADD;
+input [5:0]DIN;
 output [7:0]E;
 output [7:1]segOut;
 output DP;
 
-//Outputs of RAM
-wire [2:0]RADD;
+//Input and Outputs of RAM
+//wire [2:0]RADD;
 wire [5:0]DOUT;
-
 //Output of counter & Input of 3x8Decoder
-wire [19:17]counter;
+wire[2:0]counter; // RADD
 
 //Input of BCD
-wire [4:1]bcd; 
-wire en; //E of BCD
-
-//
-//Initialize Modules
-counter_20bit counter20(.clk(clk),.rst(1'b0),.en(1'b1),.count(counter));
-DIRAM RAM(clk,DIN,W,WADD,RADD,DOUT);
-BCD_to_7seg BCD(.bcd(DOUT[4:1]),.en(DOUT[5]),.led(segOut));
-decoder3_to_8 decoder3x8(.w(counter),.out(E),.en(1'b1));
+wire [3:0]bcd;
+wire en;
+wire DP;
+wire clk,W;
 
 assign DP = DOUT[0];
+
+counter_20bit counter20(.clk(clk),.count(counter));
+DIRAM RAM(clk,DIN,W,WADD,counter,DOUT);
+BCD_to_7seg BCD(.bcd(DOUT[4:1]),.en(DOUT[5]),.led(segOut));
+decoder3_to_8 decoder3x8(.w(counter),.out(E));
+
 
 endmodule

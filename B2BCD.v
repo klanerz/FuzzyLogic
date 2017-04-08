@@ -3,7 +3,7 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 04/03/2017 02:56:40 PM
+// Create Date: 04/03/2017 10:45:57 AM
 // Design Name: 
 // Module Name: B2BCD
 // Project Name: 
@@ -20,18 +20,14 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module B2BCD(clk,v1,v2,DV10,DV11,DV12,DV13,DV20,DV21,DV22,DV23);
+module B2BCD(clk,v1,v2,DV23,DV22,DV21,DV20,DV13,DV12,DV11,DV10);
 input clk;
 input [11:0]v1;
 input [11:0]v2;
 output reg [3:0] DV10,DV11,DV12,DV13,DV20,DV21,DV22,DV23;
-reg [3:0]state;
+reg [3:0]state = 0;
 reg [11:0]R;
-reg [3:0]D3t, D2t, D1t;
-
-initial begin
-state <= 0;
-end
+reg [11:0]D3t,D2t,D1t;
 always @(posedge clk)
 begin
     case(state)
@@ -77,7 +73,7 @@ begin
             end
             else
             begin
-                state <= 1;
+                state <= 0;
                 DV20 <= R[3:0]; DV21 <= D1t; DV22 <= D2t;
                 DV23 <= D3t; R <= v1; D3t <= 0; D2t <= 0; D1t <= 0;
             end

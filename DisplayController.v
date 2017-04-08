@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module DisplayController(clk,DV10,DV11,DV12,DV13,DV20,DV21,DV22,DV23,W,WADD,DIN);
+module DisplayController(clk,DV23,DV22,DV21,DV20,DV13,DV12,DV11,DV10,W,WADD,DIN);
 input clk;
 input [3:0]DV10,DV11,DV12,DV13,DV20,DV21,DV22,DV23;
 output W;
@@ -34,17 +34,18 @@ always @(posedge clk)
 case(state)
     0: begin state <= 1; WADD <= 7; DIN <={1'b1, DV23,1'b1};end
     1: begin state <= 2; WADD <= WADD-1; DIN <={1'b1, DV22,1'b1};end
-    2: begin state <= 3; WADD <= WADD-1; DIN <={1'b1, DV23,21'b1};end
-    3: begin state <= 4; WADD <= WADD-1; DIN <={1'b1, DV23,20'b1};end
-    4: begin state <= 5; WADD <= WADD-1; DIN <={1'b1, DV23,13'b1};end
-    5: begin state <= 6; WADD <= WADD-1; DIN <={1'b1, DV23,12'b1};end
-    6: begin state <= 7; WADD <= WADD-1; DIN <={1'b1, DV23,11'b1};end
-    7: begin state <= 8; WADD <= WADD-1; DIN <={1'b1, DV23,10'b1};end
+    2: begin state <= 3; WADD <= WADD-1; DIN <={1'b1, DV21,1'b1};end
+    3: begin state <= 4; WADD <= WADD-1; DIN <={1'b1, DV20,1'b1};end
+    4: begin state <= 5; WADD <= WADD-1; DIN <={1'b1, DV13,1'b1};end
+    5: begin state <= 6; WADD <= WADD-1; DIN <={1'b1, DV12,1'b1};end
+    6: begin state <= 7; WADD <= WADD-1; DIN <={1'b1, DV11,1'b1};end
+    7: begin state <= 8; WADD <= WADD-1; DIN <={1'b1, DV10,1'b1};end
     8: begin state <= 0; end
     default: state <= 0;
 endcase
 
 always @(*)
+begin
 case(state)
     0: W = 0;
     1: W = 1;
@@ -57,4 +58,5 @@ case(state)
     8: W = 1;
     default: W = 0;
 endcase
+end
 endmodule

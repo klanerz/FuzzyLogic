@@ -20,38 +20,39 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module ADC_Controller(clk,ready,initialaddress_in,data,v1,v2);
+module ADC_Controller(clk,ready,address_in,data,v1,v2);
 input clk;
 input ready;
-input [7:0] initialaddress_in;
+output [7:0]address_in;
 input [15:0]data;
 output [11:0]v1,v2;
 
 //reg [7:0]address_in;
 reg [11:0]v1,v2;
-reg [7:0] address_in;
-reg [1:0] state = 0;
+reg [7:0]address_in;
+reg [3:0] state = 0;
 
 always @(posedge clk)
 begin
 if(ready == 1'b1)
 begin 
 case(state)
-    
+    0: begin if(ready == 1)
+        begin
+            state <= 1;
+            v1 <= data[15:4];
+            address_in <= 7'h1b;
+        end
+       end
+    1: begin if(ready == 1)
+        begin
+            state <= 0;
+            v2 <= data[15:4];
+            address_in <= 7'h13;
+        end
+       end
 endcase
 end
-begin
-    if(address_in == 8'h13) 
-    begin
-        v1 <= data[15:4];
-        address_in <= 8'h1b; 
-    end
-    else //temperature in
-    begin
-        v2 <= data[15:4];
-        address_in <= 8'h13;            
-    end        
-end      
-
 end
+
 endmodule
