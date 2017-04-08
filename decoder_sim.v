@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 04/04/2017 12:52:29 PM
+// Create Date: 04/06/2017 11:03:33 PM
 // Design Name: 
-// Module Name: tb_b2bcd
+// Module Name: decoder_sim
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,19 +20,23 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module tb_b2bcd;
-reg clk;
-reg [11:0]v1;
-reg [11:0]v2;
-wire [3:0] DV10,DV11,DV12,DV13,DV20,DV21,DV22,DV23;
+module decoder_sim(); //module decoder3_to_8(w,out,en);
+reg [2:0]w;
+reg en;
+wire [7:0]out;
 
-B2BCD uut(clk,v1,v2,DV23,DV22,DV21,DV20,DV13,DV12,DV11,DV10);
+decoder3_to_8 uut(w,out,en);
+
 initial begin
-clk = 0;
-v1 = 412; v2 = 3123;
-repeat(1000)
-begin
-#1 clk =~clk;
-end
+en = 1;
+#5 w = 3'b000;
+#5 w = 3'b001;
+#5 w = 3'b010;
+#5 w = 3'b011;
+#5 w = 3'b100;
+#5 w = 3'b101;
+#5 w = 3'b110;
+#5 w = 3'b111;
+
 end
 endmodule

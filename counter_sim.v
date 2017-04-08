@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 04/04/2017 12:52:29 PM
+// Create Date: 04/04/2017 01:14:51 PM
 // Design Name: 
-// Module Name: tb_b2bcd
+// Module Name: counter_sim
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,19 +20,19 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module tb_b2bcd;
+module counter_sim();
+//module counter_20bit(clk,rst,en,count);
 reg clk;
-reg [11:0]v1;
-reg [11:0]v2;
-wire [3:0] DV10,DV11,DV12,DV13,DV20,DV21,DV22,DV23;
+wire [2:0]count;
 
-B2BCD uut(clk,v1,v2,DV23,DV22,DV21,DV20,DV13,DV12,DV11,DV10);
 initial begin
-clk = 0;
-v1 = 412; v2 = 3123;
-repeat(1000)
-begin
-#1 clk =~clk;
+clk =1;
 end
+
+always begin
+#5 clk =~clk;
 end
+
+counter_20bit uut(clk,count);
+
 endmodule

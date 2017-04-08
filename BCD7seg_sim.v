@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 04/04/2017 12:52:29 PM
+// Create Date: 04/04/2017 02:45:08 PM
 // Design Name: 
-// Module Name: tb_b2bcd
+// Module Name: BCD7seg_sim
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,19 +20,25 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module tb_b2bcd;
-reg clk;
-reg [11:0]v1;
-reg [11:0]v2;
-wire [3:0] DV10,DV11,DV12,DV13,DV20,DV21,DV22,DV23;
+module BCD7seg_sim(); //module BCD_to_7seg(bcd,en, led);
+reg [3:0]bcd;
+reg en;
+wire [7:1]led;
 
-B2BCD uut(clk,v1,v2,DV23,DV22,DV21,DV20,DV13,DV12,DV11,DV10);
+BCD_to_7seg uut(bcd,en,led);
+
 initial begin
-clk = 0;
-v1 = 412; v2 = 3123;
-repeat(1000)
-begin
-#1 clk =~clk;
-end
+en = 1;
+
+bcd = 4'b0000;
+#1 bcd = 4'b0000;
+#1 bcd = 4'b0001;
+#1 bcd = 4'b0011;
+#1 bcd = 4'b0100;
+#1 bcd = 4'b0101;
+#1 bcd = 4'b0110;
+#1 bcd = 4'b0111;
+#1 bcd = 4'b1000;
+#1 bcd = 4'b1001;
 end
 endmodule
