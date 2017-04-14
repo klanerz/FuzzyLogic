@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 04/06/2017 11:03:33 PM
+// Create Date: 04/10/2017 03:25:06 PM
 // Design Name: 
-// Module Name: decoder_sim
+// Module Name: PWM_sim
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,21 +20,22 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module decoder_sim(); //module decoder3_to_8(w,out,en);
-reg [2:0]w;
-wire [7:0]Y;
+module PWM_sim();
+reg [11:0] PW;
+reg clk;
+wire PWM;
 
-decoder3_to_8 uut(w,Y);
+PWM uut(.clk(clk),.PW(PW),.PWM(PWM));
+
 
 initial begin
-#5 w = 3'b000;
-#5 w = 3'b001;
-#5 w = 3'b010;
-#5 w = 3'b011;
-#5 w = 3'b100;
-#5 w = 3'b101;
-#5 w = 3'b110;
-#5 w = 3'b111;
-
+clk=0;
+forever #1 clk = ~clk;
 end
+
+initial begin
+#10 PW <= 25;
+end
+
+
 endmodule
