@@ -26,10 +26,16 @@ input [3:0]DV10,DV11,DV12,DV13,DV20,DV21,DV22,DV23;
 output W;
 output [2:0]WADD;
 output [5:0]DIN;
-reg [3:0]state = 0;
+reg [3:0]state;
 reg [2:0]WADD;
 reg [5:0]DIN;
 reg W;
+
+initial begin
+state <= 0;
+WADD <= 0;
+DIN <= 0;
+end
 always @(posedge clk)
 case(state)
     0: begin state <= 1; WADD <= 7; DIN <={1'b1, DV23,1'b1};end

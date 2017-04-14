@@ -29,8 +29,8 @@ e| _d_ |c
 module BCD_to_7seg(bcd,en, led);
 input [3:0] bcd; //DOUT[4:1]
 input en; // DOUT[5]
-output [7:1]led;
-reg [7:1] led;
+output [6:0]led;
+reg [6:0] led;
 
 always @(bcd)
 begin
@@ -57,8 +57,7 @@ begin
        13: led = 7'b1000010; // D
        14: led = 7'b0110000; // E
        15: led = 7'b0111000; // F
-       
-        default: led = 7'bx;
+        default: led = 7'b1111111;
     endcase
 end
 end

@@ -23,15 +23,19 @@
 module ADC_Controller(clk,ready,address_in,data,v1,v2);
 input clk;
 input ready;
-output [7:0]address_in;
+output reg[6:0]address_in;
 input [15:0]data;
 output [11:0]v1,v2;
 
 //reg [7:0]address_in;
 reg [11:0]v1,v2;
-reg [7:0]address_in;
-reg [3:0] state = 0;
+reg [3:0] state;
 
+initial begin
+v1 <= 0;
+v2 <= 0;
+state <= 0;
+end
 always @(posedge clk)
 begin
 if(ready == 1'b1)
@@ -51,6 +55,7 @@ case(state)
             address_in <= 7'h13;
         end
        end
+     default: state <= 0;
 endcase
 end
 end

@@ -25,9 +25,16 @@ input clk;
 input [11:0]v1;
 input [11:0]v2;
 output reg [3:0] DV10,DV11,DV12,DV13,DV20,DV21,DV22,DV23;
-reg [3:0]state = 0;
+reg [3:0]state;
 reg [11:0]R;
 reg [11:0]D3t,D2t,D1t;
+initial begin
+state <= 0;
+D3t <= 0;
+D2t <= 0;
+D1t <= 0;
+R <= v1;
+end
 always @(posedge clk)
 begin
     case(state)

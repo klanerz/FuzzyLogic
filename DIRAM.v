@@ -35,6 +35,6 @@ initial begin
 end
 always@(posedge clk)
   if(W) RAM[WADD]<= DIN;
-  assign DOUT=RAM[RADD];
+assign DOUT=RAM[RADD];
 endmodule
 
