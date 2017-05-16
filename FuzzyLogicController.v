@@ -20,11 +20,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module FuzzyLogicController(clk,vauxp3,vauxn3,vauxp11,vauxn11,E,segOut,DP);
+module FuzzyLogicController(clk,vauxp3,vauxn3,vauxp11,vauxn11,E,segOut,DP,PWM);
 input clk,vauxp3,vauxn3,vauxp11,vauxn11;
 output [7:0]E;
 output [6:0]segOut;
-output DP;
+output DP,PWM;
 
 //XADC & ADC Controller
 wire enable,ready; //vauxp3,vauxn3,vauxp11,vauxn11
@@ -40,12 +40,13 @@ wire [5:0]DIN;
 wire [11:0]v1,v2;
 wire [3:0]DV23,DV22,DV21,DV20,DV13,DV12,DV11,DV10;
 
+// PWM Connections
 
 ADC_Controller ADC(clk,ready,Address_in,data,v1,v2);
 B2BCD b2bcd(clk,v1,v2,DV23,DV22,DV21,DV20,DV13,DV12,DV11,DV10);
 DisplayController DispCon(clk,DV23,DV22,DV21,DV20,DV13,DV12,DV11,DV10,W,WADD,DIN); 
 Display_Interface DispInt(clk,W,WADD,DIN,E,segOut,DP);
-
+PWM pwm(clk,v2,PWM);//(clk,PW,PWM)
 xadc_wiz_0 MyADC(
       .daddr_in(Address_in), 	//Address bus for the dynamic reconfiguration port
       .den_in(enable),    	//Enable Signal for the dynamic reconfiguration port
